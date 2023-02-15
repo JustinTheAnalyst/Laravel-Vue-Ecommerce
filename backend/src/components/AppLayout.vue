@@ -35,6 +35,10 @@ onMounted(() => {
     window.addEventListener("resize", handleSidebarOpened);
 });
 
+onUnmounted(() => {
+    window.removeEventListener("resize", handleSidebarOpened);
+});
+
 function handleSidebarOpened() {
     sidebarOpened.value = window.outerWidth > 768 ? true : false;
 }
