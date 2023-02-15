@@ -1,21 +1,45 @@
 <template>
-    <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div class="w-full max-w-md space-y-8">
-        <div>
-            <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-            {{ title }}
-            </h2>
-            
-        </div>
-        
-        <router-view></router-view>
+    <div class="flex min-h-full bg-gray-200">
+        <!-- Sidebar -->
+        <Sidebar :class="{ '-ml-[200px]': !sidebarOpened }" />
 
+        <div class="flex-1">
+            <!-- Top Header -->
+            <NavBar @toggle-sidebar="toggleSidebar" />
+
+            <!-- Content -->
+            <main class="p-6">
+                <router-view></router-view>
+            </main>
         </div>
     </div>
 </template>
 
 <script setup>
-    const {title} = defineProps({
-        title: String
-    })
+import { ref, onMounted, onUnmounted } from "vue";
+import NavBar from "./NavBar.vue";
+import Sidebar from "./Sidebar.vue";
+
+const { title } = defineProps({
+    title: String,
+});
+
+const sidebarOpened = ref(true);
+
+function toggleSidebar() {
+    sidebarOpened.value = !sidebarOpened.value;
+}
+
+onMounted(() => {
+    handleSidebarOpened();
+    window.addEventListener("resize", handleSidebarOpened);
+});
+
+onUnmounted(() => {
+    window.removeEventListener("resize", handleSidebarOpened);
+});
+
+function handleSidebarOpened() {
+    sidebarOpened.value = window.outerWidth > 768 ? true : false;
+}
 </script>

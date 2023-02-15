@@ -1,13 +1,14 @@
-import {createStore} from 'vuex';
+import { createStore } from "vuex";
 
-const store = createStore({ 
-
+const store = createStore({
     state: {
-        test: '1234'
+        user: {
+            token: 12345,
+        },
     },
     getters: {},
     actions: {},
     mutations: {},
 });
 
-export default store
+export default store;
