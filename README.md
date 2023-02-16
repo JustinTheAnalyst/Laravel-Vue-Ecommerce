@@ -27,3 +27,10 @@ Password: useruser2
 ## Environments
 
 I'm using MySQL, PHP8.1, Node.js and composer.
+
+## Deploy on production
+
+> Setup shared hosting & SSL
+> Setup subdomain for production
+> Connect to hosting server using SSH (not all shared hosting has the SSH access)
+> composer installation
