@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Fascades\Auth;
 
 class Admin
 {
@@ -21,7 +22,7 @@ class Admin
         }
 
         return response([
-
+            'message' => 'You don\'t have the permission to perform this action'
         ], 403);
     }
 }

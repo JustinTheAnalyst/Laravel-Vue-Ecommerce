@@ -9,33 +9,30 @@ class AuthController extends Controller
 {
     public function login(Request $request){
 
-        $crdentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required', 'password'],
+        $credentials = $request->validate([
+            'email'=> ['required', 'email'],
+            'password' => 'required',
             'remember' => 'boolean'
         ]);
 
-        $remember = $crdentials['remember'] ?? false;
-        unset($crdentials['remember']);
-        if (!$Auth::attempt($crdentials, $remember)) {
-            return response([
-                'message' => 'Email or password is incorrect',
-            ], 422);
+        $remember = $credentials['remember'] ?? false;
+        unset($credentials['remember']);
 
+        if (!Auth::attempt($credentials, $remember)) {
+            return response([
+                'message' => 'Email or password is incorrect'
+            ], 422);
         }
 
         /** @var \App\Models\User $user */
         $user = Auth::user();
-        if(!$user->is_admin){
+        if (!$user->is_admin) {
             Auth::logout();
-
             return response([
                 'message' => 'You don\'t have permission to authenticate as admin'
             ], 403);
         }
-
-        $token = $user->createToken('main')->plainTestToken;
-
+        $token = $user->createToken('main')->plainTextToken;
         return response([
             'user' => $user,
             'token' => $token

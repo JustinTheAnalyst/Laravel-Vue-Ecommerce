@@ -11,7 +11,7 @@ axiosClient.interceptors.request.use((config) => {
     return config;
 });
 
-axiosClient.interceptors.request.use(
+axiosClient.interceptors.response.use(
     (response) => {
         return response;
     },
@@ -21,7 +21,7 @@ axiosClient.interceptors.request.use(
             router.push({ name: "login" });
         }
 
-        throw error;
+        console.error(error);
     }
 );
 
